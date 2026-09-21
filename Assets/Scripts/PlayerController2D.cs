@@ -7,7 +7,7 @@ public class PlayerController2D : MonoBehaviour
     // Public variables
     public float speed = 5f; // The speed at which the player moves
     public bool canMoveDiagonally = true; // Controls whether the player can move diagonally
-    
+
     public InputActionReference moveAction;
 
     // Private variables 
@@ -32,7 +32,7 @@ public class PlayerController2D : MonoBehaviour
     {
         // Get player input from keyboard or controller
         Vector2 moveInput = moveAction.action.ReadValue<Vector2>();
-        
+
         float horizontalInput = moveInput.x;
         float verticalInput = moveInput.y;
 
@@ -42,7 +42,7 @@ public class PlayerController2D : MonoBehaviour
             // Set movement direction based on input
             movement = new Vector2(horizontalInput, verticalInput);
             // Optionally rotate the player based on movement direction
-            RotatePlayer(horizontalInput, verticalInput);
+            //RotatePlayer(horizontalInput, verticalInput);
         }
         else
         {
@@ -60,12 +60,12 @@ public class PlayerController2D : MonoBehaviour
             if (isMovingHorizontally)
             {
                 movement = new Vector2(horizontalInput, 0);
-                RotatePlayer(horizontalInput, 0);
+                //RotatePlayer(horizontalInput, 0);
             }
             else
             {
                 movement = new Vector2(0, verticalInput);
-                RotatePlayer(0, verticalInput);
+                //RotatePlayer(0, verticalInput);
             }
         }
     }
@@ -76,16 +76,16 @@ public class PlayerController2D : MonoBehaviour
         rb.linearVelocity = movement * speed;
     }
 
-    void RotatePlayer(float x, float y)
-    {
-        // If there is no input, do not rotate the player
-        if (x == 0 && y == 0) return;
+    // void RotatePlayer(float x, float y)
+    // {
+    //     // If there is no input, do not rotate the player
+    //     if (x == 0 && y == 0) return;
 
-        // Calculate the rotation angle based on input direction
-        float angle = Mathf.Atan2(y, x) * Mathf.Rad2Deg;
-        // Apply the rotation to the player
-        transform.rotation = Quaternion.Euler(0, 0, angle);
-    }
+    //     // Calculate the rotation angle based on input direction
+    //     float angle = Mathf.Atan2(y, x) * Mathf.Rad2Deg;
+    //     // Apply the rotation to the player
+    //     transform.rotation = Quaternion.Euler(0, 0, angle);
+    // }
 
     private void OnDisable()
     {
