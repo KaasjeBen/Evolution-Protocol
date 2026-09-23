@@ -10,20 +10,39 @@ public class PlayerController2D : MonoBehaviour
 
     public InputActionReference moveAction;
 
+    [Header("Moving Sprites")]
+    public Sprite spriteUp;
+    public Sprite spriteDown;
+    public Sprite spriteLeft;
+    public Sprite spriteRight;
+
+    [Header("Idle Sprites")]
+    public Sprite idleUp;
+    public Sprite idleDown;
+    public Sprite idleLeft;
+    public Sprite idleRight;
+
     // Private variables 
     private Rigidbody2D rb; // Reference to the Rigidbody2D component attached to the player
+    private SpriteRenderer spriteRenderer; // Reference to the SpriteRenderer component
     private Vector2 movement; // Stores the direction of player movement
     private bool isMovingHorizontally = true; // Flag to track if the player is moving horizontally
+    private string lastDirection = "Down"; // Tracks last look direction for idle sprite
 
     private void OnEnable()
     {
-        moveAction.action.Enable();
+        if (moveAction != null)
+        {
+            moveAction.action.Enable();
+        }
     }
 
     void Start()
     {
-        // Initialize the Rigidbody2D component
+        // Initialize components
         rb = GetComponent<Rigidbody2D>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
+
         // Prevent the player from rotating
         rb.constraints = RigidbodyConstraints2D.FreezeRotation;
     }
@@ -31,7 +50,16 @@ public class PlayerController2D : MonoBehaviour
     void Update()
     {
         // Get player input from keyboard or controller
-        Vector2 moveInput = moveAction.action.ReadValue<Vector2>();
+        Vector2 moveInput = moveAction != null
+            ? moveAction.action.ReadValue<Vector2>()
+            : Vector2.zero;
+
+        if (moveInput == Vector2.zero && Keyboard.current != null)
+        {
+            moveInput = new Vector2(
+                (Keyboard.current.dKey.isPressed ? 1f : 0f) - (Keyboard.current.aKey.isPressed ? 1f : 0f),
+                (Keyboard.current.wKey.isPressed ? 1f : 0f) - (Keyboard.current.sKey.isPressed ? 1f : 0f));
+        }
 
         float horizontalInput = moveInput.x;
         float verticalInput = moveInput.y;
@@ -41,8 +69,6 @@ public class PlayerController2D : MonoBehaviour
         {
             // Set movement direction based on input
             movement = new Vector2(horizontalInput, verticalInput);
-            // Optionally rotate the player based on movement direction
-            //RotatePlayer(horizontalInput, verticalInput);
         }
         else
         {
@@ -56,39 +82,88 @@ public class PlayerController2D : MonoBehaviour
                 isMovingHorizontally = false;
             }
 
-            // Set movement direction and optionally rotate the player
+            // Set movement direction
             if (isMovingHorizontally)
             {
                 movement = new Vector2(horizontalInput, 0);
-                //RotatePlayer(horizontalInput, 0);
             }
             else
             {
                 movement = new Vector2(0, verticalInput);
-                //RotatePlayer(0, verticalInput);
             }
         }
+
+        // Handle swapping sprites based on current input and last direction
+        UpdateSprite();
     }
 
     void FixedUpdate()
     {
-        // Apply movement to the player in FixedUpdate for physics consistency
-        rb.linearVelocity = movement * speed;
+        // Normalize movement vector so diagonal isn't faster, then apply velocity
+        rb.linearVelocity = movement.normalized * speed;
     }
 
-    // void RotatePlayer(float x, float y)
-    // {
-    //     // If there is no input, do not rotate the player
-    //     if (x == 0 && y == 0) return;
+    void UpdateSprite()
+    {
+        // Make sure we have a SpriteRenderer attached so it doesn't throw a NullReferenceException
+        if (spriteRenderer == null) return;
 
-    //     // Calculate the rotation angle based on input direction
-    //     float angle = Mathf.Atan2(y, x) * Mathf.Rad2Deg;
-    //     // Apply the rotation to the player
-    //     transform.rotation = Quaternion.Euler(0, 0, angle);
-    // }
+        // Check if player is giving movement input
+        if (movement.sqrMagnitude > 0.01f)
+        {
+            // Priority given to X axis when moving diagonally
+            if (Mathf.Abs(movement.x) > Mathf.Abs(movement.y))
+            {
+                if (movement.x > 0)
+                {
+                    spriteRenderer.sprite = spriteRight;
+                    lastDirection = "Right";
+                }
+                else
+                {
+                    spriteRenderer.sprite = spriteLeft;
+                    lastDirection = "Left";
+                }
+            }
+            else
+            {
+                if (movement.y > 0)
+                {
+                    spriteRenderer.sprite = spriteUp;
+                    lastDirection = "Up";
+                }
+                else
+                {
+                    spriteRenderer.sprite = spriteDown;
+                    lastDirection = "Down";
+                }
+            }
+        }
+        else // Player stopped moving -> apply matching idle sprite
+        {
+            switch (lastDirection)
+            {
+                case "Up":
+                    if (idleUp != null) spriteRenderer.sprite = idleUp;
+                    break;
+                case "Down":
+                    if (idleDown != null) spriteRenderer.sprite = idleDown;
+                    break;
+                case "Left":
+                    if (idleLeft != null) spriteRenderer.sprite = idleLeft;
+                    break;
+                case "Right":
+                    if (idleRight != null) spriteRenderer.sprite = idleRight;
+                    break;
+            }
+        }
+    }
 
     private void OnDisable()
     {
-        moveAction.action.Disable();
+        if (moveAction != null)
+        {
+            moveAction.action.Disable();
+        }
     }
 }
