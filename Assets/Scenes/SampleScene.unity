@@ -549,6 +549,7 @@ GameObject:
   - component: {fileID: 123863139}
   - component: {fileID: 123863142}
   - component: {fileID: 123863143}
+  - component: {fileID: 123863144}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -632,7 +633,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 1
   m_MaskInteraction: 0
-  m_Sprite: {fileID: -7940084106219207453, guid: 2ffc4c1256231dd4db358f4293c4d590, type: 3}
+  m_Sprite: {fileID: 9082096816701911304, guid: efebb1b0f832c0e479218c971da5da3e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -672,26 +673,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController2D
   speed: 3
-  canMoveDiagonally: 1
-  moveAction: {fileID: 0}
-  attackAction: {fileID: 0}
-  attackDamage: 1
-  attackRange: 0.75
-  attackRadius: 0.35
-  attackCooldown: 0.35
-  attackAnimationDuration: 0.12
-  attackAnimationScale: 1.2
-  attackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  spriteUp: {fileID: 3916472999380810847, guid: 2ffc4c1256231dd4db358f4293c4d590, type: 3}
-  spriteDown: {fileID: -7940084106219207453, guid: 2ffc4c1256231dd4db358f4293c4d590, type: 3}
-  spriteLeft: {fileID: 5805397002006625479, guid: 2ffc4c1256231dd4db358f4293c4d590, type: 3}
-  spriteRight: {fileID: -2174198575825452347, guid: 2ffc4c1256231dd4db358f4293c4d590, type: 3}
-  idleUp: {fileID: -7272992688323786003, guid: 2ffc4c1256231dd4db358f4293c4d590, type: 3}
-  idleDown: {fileID: 2345114683458589026, guid: 2ffc4c1256231dd4db358f4293c4d590, type: 3}
-  idleLeft: {fileID: 3029364103333313995, guid: 2ffc4c1256231dd4db358f4293c4d590, type: 3}
-  idleRight: {fileID: 1405141989125897223, guid: 2ffc4c1256231dd4db358f4293c4d590, type: 3}
+  rb: {fileID: 123863139}
+  anim: {fileID: 0}
 --- !u!61 &123863143
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -730,7 +713,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.17, y: 0.33}
+    oldSize: {x: 1.92, y: 1.92}
     newSize: {x: 0.17, y: 0.33}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -738,6 +721,36 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 0.17, y: 0.33}
   m_EdgeRadius: 0
+--- !u!114 &123863144
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 123863138}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.InputSystem::UnityEngine.InputSystem.PlayerInput
+  m_Actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
+  m_NotificationBehavior: 0
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents: []
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: 
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 519420031}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
