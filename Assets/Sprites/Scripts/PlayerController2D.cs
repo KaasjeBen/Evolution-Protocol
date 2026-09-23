@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -9,6 +10,16 @@ public class PlayerController2D : MonoBehaviour
     public bool canMoveDiagonally = true; // Controls whether the player can move diagonally
 
     public InputActionReference moveAction;
+    public InputActionReference attackAction;
+
+    [Header("Attack")]
+    public int attackDamage = 1;
+    public float attackRange = 0.75f;
+    public float attackRadius = 0.35f;
+    public float attackCooldown = 0.35f;
+    public float attackAnimationDuration = 0.12f;
+    public float attackAnimationScale = 1.2f;
+    public LayerMask attackLayers = ~0;
 
     [Header("Moving Sprites")]
     public Sprite spriteUp;
@@ -28,12 +39,19 @@ public class PlayerController2D : MonoBehaviour
     private Vector2 movement; // Stores the direction of player movement
     private bool isMovingHorizontally = true; // Flag to track if the player is moving horizontally
     private string lastDirection = "Down"; // Tracks last look direction for idle sprite
+    private float nextAttackTime;
+    private Coroutine attackAnimation;
 
     private void OnEnable()
     {
         if (moveAction != null)
         {
             moveAction.action.Enable();
+        }
+
+        if (attackAction != null)
+        {
+            attackAction.action.Enable();
         }
     }
 
@@ -95,6 +113,17 @@ public class PlayerController2D : MonoBehaviour
 
         // Handle swapping sprites based on current input and last direction
         UpdateSprite();
+
+        bool attackPressed = attackAction != null && attackAction.action.WasPressedThisFrame();
+        if (Keyboard.current != null && Keyboard.current.spaceKey.wasPressedThisFrame)
+        {
+            attackPressed = true;
+        }
+
+        if (attackPressed)
+        {
+            Attack();
+        }
     }
 
     void FixedUpdate()
@@ -159,11 +188,90 @@ public class PlayerController2D : MonoBehaviour
         }
     }
 
+    private void Attack()
+    {
+        if (Time.time < nextAttackTime)
+        {
+            return;
+        }
+
+        nextAttackTime = Time.time + attackCooldown;
+        if (attackAnimation != null)
+        {
+            StopCoroutine(attackAnimation);
+        }
+
+        attackAnimation = StartCoroutine(PlayAttackAnimation());
+
+        Vector2 attackPosition = (Vector2)transform.position + GetFacingDirection() * attackRange;
+        Collider2D[] targets = Physics2D.OverlapCircleAll(attackPosition, attackRadius, attackLayers);
+
+        foreach (Collider2D target in targets)
+        {
+            if (target.transform.root == transform.root)
+            {
+                continue;
+            }
+
+            target.SendMessage("TakeDamage", attackDamage, SendMessageOptions.DontRequireReceiver);
+        }
+    }
+
+    private IEnumerator PlayAttackAnimation()
+    {
+        Color originalColor = spriteRenderer != null ? spriteRenderer.color : Color.white;
+        Vector3 originalScale = transform.localScale;
+        float elapsed = 0f;
+
+        while (elapsed < attackAnimationDuration)
+        {
+            elapsed += Time.deltaTime;
+            float progress = Mathf.Clamp01(elapsed / attackAnimationDuration);
+            float punch = Mathf.Sin(progress * Mathf.PI);
+            transform.localScale = originalScale * Mathf.Lerp(1f, attackAnimationScale, punch);
+
+            if (spriteRenderer != null)
+            {
+                spriteRenderer.color = Color.Lerp(originalColor, Color.white, punch);
+            }
+
+            yield return null;
+        }
+
+        transform.localScale = originalScale;
+        if (spriteRenderer != null)
+        {
+            spriteRenderer.color = originalColor;
+        }
+
+        attackAnimation = null;
+    }
+
+    private Vector2 GetFacingDirection()
+    {
+        switch (lastDirection)
+        {
+            case "Up":
+                return Vector2.up;
+            case "Left":
+                return Vector2.left;
+            case "Right":
+                return Vector2.right;
+            default:
+                return Vector2.down;
+        }
+    }
+
     private void OnDisable()
     {
         if (moveAction != null)
         {
             moveAction.action.Disable();
+        }
+
+        if (attackAction != null)
+        {
+            attackAction.action.Disable();
         }
     }
 }
