@@ -584,7 +584,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!212 &123863140
 SpriteRenderer:
   serializedVersion: 3
@@ -674,6 +674,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController2D
   speed: 3
+  facingDirection: 1
   rb: {fileID: 123863139}
   anim: {fileID: 123863145}
 --- !u!61 &123863143
