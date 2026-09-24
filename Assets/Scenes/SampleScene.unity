@@ -256,11 +256,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 175c65142ba98214ab49fb228e67f3db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController2D
-<<<<<<< Updated upstream
-  speed: 3
-=======
-  speed: 4
->>>>>>> Stashed changes
+  speed: 5
   facingDirection: 1
   rb: {fileID: 123863139}
   anim: {fileID: 123863145}
