@@ -573,7 +573,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDamping: 0
   m_AngularDamping: 0.05
-  m_GravityScale: 0
+  m_GravityScale: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -676,7 +676,6 @@ MonoBehaviour:
   speed: 3
   rb: {fileID: 123863139}
   anim: {fileID: 123863145}
-  moveAction: {fileID: -1680190386980627800, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
 --- !u!61 &123863143
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -763,7 +762,7 @@ Animator:
   m_GameObject: {fileID: 123863138}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 06a52970e6dbdc84993164e89ba0d79c, type: 2}
+  m_Controller: {fileID: 9100000, guid: a4fba3bee4acd9a4bbc931269bd31385, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
