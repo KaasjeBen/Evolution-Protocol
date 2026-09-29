@@ -5,6 +5,7 @@ public class PlayerMovement : MonoBehaviour
 {
     public float speed = 5f;
     public int facingDirection = 1; // 1 for right, -1 for left
+    public string attackTrigger = "Attack";
 
     public Rigidbody2D rb;
     public Animator anim;
@@ -17,6 +18,14 @@ public class PlayerMovement : MonoBehaviour
         movement = value.Get<Vector2>();
     }
 
+    public void OnAttack(InputValue value)
+    {
+        if (value.isPressed && anim != null)
+        {
+            anim.SetTrigger(attackTrigger);
+        }
+    }
+
     private void FixedUpdate()
     {
 
@@ -25,7 +34,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (rb != null)
 
-           
+
         {
             anim.SetFloat("horizontal", Mathf.Abs(movement.x));
             anim.SetFloat("vertical", Mathf.Abs(movement.y));
@@ -33,14 +42,14 @@ public class PlayerMovement : MonoBehaviour
             if (horizontal > 0 && transform.localScale.x < 0 ||
                 (horizontal < 0 && transform.localScale.x > 0))
             {
-               Flip ();
+                Flip();
             }
 
             rb.linearVelocity = movement * speed;
         }
     }
 
-    
+
     void Flip()
     {
         facingDirection *= -1;
@@ -51,4 +60,3 @@ public class PlayerMovement : MonoBehaviour
 }
 
 
-    
