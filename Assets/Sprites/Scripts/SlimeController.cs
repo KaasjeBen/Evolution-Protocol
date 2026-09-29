@@ -44,6 +44,10 @@ public class SlimeController : MonoBehaviour
         else
         {
             SetSeeingPlayer(false);
+            if (anim != null)
+            {
+                anim.SetBool("closeToPlayer", false);
+            }
             wasCloseToPlayer = false;
         }
 
@@ -96,6 +100,11 @@ public class SlimeController : MonoBehaviour
 
         SetSeeingPlayer(true);
 
+        if (anim != null)
+        {
+            anim.SetBool("closeToPlayer", isCloseToPlayer);
+        }
+
         if (isCloseToPlayer)
         {
             movement = Vector2.zero;
@@ -103,7 +112,7 @@ public class SlimeController : MonoBehaviour
 
             if ((!wasCloseToPlayer || closeAttackTimer <= 0f) && anim != null)
             {
-                anim.SetTrigger("closeToPlayer");
+                anim.SetTrigger("attack");
                 closeAttackTimer = Mathf.Max(0.1f, closeAttackInterval);
             }
         }
