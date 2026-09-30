@@ -465,7 +465,7 @@ Camera:
   far clip plane: 1000
   field of view: 34
   orthographic: 1
-  orthographic size: 5.1644225
+  orthographic size: 4
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -491,7 +491,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 1.2665997, y: 0.79668045, z: -10.22506}
-  m_LocalScale: {x: 0.46402657, y: 0.46402657, z: 0.46402657}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 932102470}
@@ -6420,6 +6420,7 @@ Transform:
   m_Children:
   - {fileID: 519420032}
   - {fileID: 1528348762}
+  - {fileID: 1946390069}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1139370409
@@ -6732,6 +6733,7 @@ GameObject:
   - component: {fileID: 1528348762}
   - component: {fileID: 1528348764}
   - component: {fileID: 1528348763}
+  - component: {fileID: 1528348765}
   m_Layer: 0
   m_Name: CinemachineCamera
   m_TagString: Untagged
@@ -6749,7 +6751,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 1.2665997, y: 0.79668045, z: -10.22506}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 0.4, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 932102470}
@@ -6798,7 +6800,7 @@ MonoBehaviour:
     CustomLookAtTarget: 0
   Lens:
     FieldOfView: 34
-    OrthographicSize: 5.1644225
+    OrthographicSize: 4
     NearClipPlane: 0.3
     FarClipPlane: 1000
     Dutch: 0
@@ -6816,6 +6818,167 @@ MonoBehaviour:
       BarrelClipping: 0.25
       Anamorphism: 0
   BlendHint: 0
+--- !u!114 &1528348765
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1528348761}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f453f694addf4275988fac205bc91968, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineConfiner2D
+  BoundingShape2D: {fileID: 1946390070}
+  Damping: 0.5
+  SlowingDistance: 5
+  OversizeWindow:
+    Enabled: 0
+    MaxWindowSize: 0
+    Padding: 0
+  m_LegacyMaxWindowSize: -2
+--- !u!1 &1946390068
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1946390069}
+  - component: {fileID: 1946390070}
+  m_Layer: 0
+  m_Name: Confiner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1946390069
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1946390068}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 1.5176983, y: -0.15530968, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 932102470}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!60 &1946390070
+PolygonCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1946390068}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: -19.593548, y: 4.327525}
+      - {x: -19.566643, y: 2.4806156}
+      - {x: -19.56081, y: 1.2645397}
+      - {x: -20.557276, y: 0.35881782}
+      - {x: -21.466469, y: 0.26835823}
+      - {x: -21.514528, y: -0.7558917}
+      - {x: -21.513794, y: -1.696943}
+      - {x: -21.585163, y: -3.7018547}
+      - {x: -21.516096, y: -7.664995}
+      - {x: -20.556034, y: -8.702787}
+      - {x: -20.51912, y: -9.728004}
+      - {x: -19.508263, y: -10.730152}
+      - {x: -17.59694, y: -11.687548}
+      - {x: -12.537268, y: -11.707186}
+      - {x: -11.532438, y: -11.69276}
+      - {x: -8.686403, y: -12.218657}
+      - {x: -7.5208473, y: -12.619783}
+      - {x: -6.501028, y: -14.044565}
+      - {x: -4.5639305, y: -14.820831}
+      - {x: 6.522887, y: -14.662161}
+      - {x: 7.50412, y: -11.684883}
+      - {x: 9.599283, y: -11.647501}
+      - {x: 14.411275, y: -11.764313}
+      - {x: 14.540516, y: -9.701887}
+      - {x: 15.548002, y: -8.761715}
+      - {x: 15.548002, y: -8.761715}
+      - {x: 15.592711, y: -7.7589397}
+      - {x: 15.540308, y: -6.677021}
+      - {x: 15.524051, y: -5.7507305}
+      - {x: 16.61868, y: -4.6204987}
+      - {x: 16.436039, y: -0.26086235}
+      - {x: 16.476755, y: 3.2584248}
+      - {x: 16.46875, y: 4.234276}
+      - {x: 15.441432, y: 5.2749395}
+      - {x: 14.446272, y: 6.1824884}
+      - {x: 13.355318, y: 7.320669}
+      - {x: 12.500826, y: 7.266325}
+      - {x: 7.4819593, y: 7.297473}
+      - {x: 5.814168, y: 7.2821093}
+      - {x: 2.4817019, y: 7.3566904}
+      - {x: 0.400774, y: 7.891761}
+      - {x: -0.76177406, y: 8.564292}
+      - {x: -1.4893932, y: 9.336302}
+      - {x: -1.5452614, y: 10.232}
+      - {x: -2.3575306, y: 10.240678}
+      - {x: -3.2365742, y: 10.298327}
+      - {x: -3.9452972, y: 10.264645}
+      - {x: -5.2980556, y: 10.3010025}
+      - {x: -8.333525, y: 10.232871}
+      - {x: -10.57032, y: 10.264367}
+      - {x: -11.505741, y: 10.259095}
+      - {x: -12.553455, y: 10.314539}
+      - {x: -13.446949, y: 10.279425}
+      - {x: -14.5616, y: 10.27488}
+      - {x: -15.54406, y: 10.160777}
+      - {x: -16.596203, y: 10.284401}
+      - {x: -17.627346, y: 10.264571}
+      - {x: -18.385319, y: 9.212086}
+      - {x: -18.508282, y: 8.313658}
+      - {x: -18.516102, y: 6.3848343}
+      - {x: -18.942757, y: 5.3872137}
+      - {x: -19.526836, y: 5.305972}
+  m_UseDelaunayMesh: 1
 --- !u!1 &1993017181
 GameObject:
   m_ObjectHideFlags: 0
